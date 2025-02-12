@@ -1,14 +1,13 @@
 import uuid
-from uuid import uuid4
 
 import pytest
-from category import Category
+from src.core.category.domain.category import Category
 
 
 class TestCategory:
     def test_category(self):
-        category = Category("test")
-        assert category.name == 'test'
+        category = Category("tests")
+        assert category.name == 'tests'
         assert category.description == ''
         assert category.is_active is True
         assert category.created_at is not None
@@ -24,19 +23,19 @@ class TestCategory:
             Category(name="a" * 256)
 
     def test_category_must_have_uuid(self):
-        category = Category("test")
+        category = Category("tests")
         assert category.id is not None
         assert len(str(category.id)) == 36
         assert isinstance(category.id, uuid.UUID)
 
     def test_category_repr(self):
-        category = Category("test")
-        assert category.__str__() == 'test -  - True'
-        assert category.repr() == 'test -  - True'
+        category = Category("tests")
+        assert category.__str__() == 'tests -  - True'
+        assert category.repr() == 'tests -  - True'
 
     def test_category_with_default_values(self):
-        category = Category("test")
-        assert category.name == 'test'
+        category = Category("tests")
+        assert category.name == 'tests'
         assert category.description == ''
         assert category.is_active is True
         assert category.created_at is not None
@@ -49,7 +48,7 @@ class TestCategory:
 
 
     def test_active_category(self):
-        category = Category("test")
+        category = Category("tests")
         category.activate()
 
         assert category.is_active is True
