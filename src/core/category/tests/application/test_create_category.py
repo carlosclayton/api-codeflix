@@ -5,12 +5,12 @@ import uuid
 
 from src.core.category.application.create_category import CreateCategory, CreateCategoryRequest, CreateCategoryResponse
 from src.core.category.application.invalid_category_data import InvalidCategoryData
-from src.core.category.infra.in_memory_category_repository import InmemoryCategoryRepository
+from src.core.category.application.category_repository import CategoryRepository
 
 
 class TestCreateCategory:
     def test_create_category_with_valid_data(self):
-        mock_repository = MagicMock(InmemoryCategoryRepository)
+        mock_repository = MagicMock(CategoryRepository)
         use_case = CreateCategory(repository=mock_repository)
 
         request = CreateCategoryRequest(
@@ -23,13 +23,13 @@ class TestCreateCategory:
 
         use_case.execute(request=request, response=response)
 
-        mock_repository.add.called_once_with()
+        mock_repository.create.called_once_with()
         assert response.id is not None
 
 
     def test_create_category_with_invalid_data(self):
         with pytest.raises(InvalidCategoryData, match="Name is required"):
-            mock_repository = MagicMock(InmemoryCategoryRepository)
+            mock_repository = MagicMock(CategoryRepository)
             use_case = CreateCategory(repository=mock_repository)
 
             request = CreateCategoryRequest(
@@ -41,4 +41,4 @@ class TestCreateCategory:
             response = CreateCategoryResponse(id=uuid.uuid4())
 
             use_case.execute(request=request, response=response)
-            mock_repository.add.assert_not_called()
+            mock_repository.create.assert_not_called()

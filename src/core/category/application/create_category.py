@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from src.core.category.application.invalid_category_data import InvalidCategoryData
 from src.core.category.domain.category import Category
-from src.core.category.infra.in_memory_category_repository import InmemoryCategoryRepository
+from src.core.category.application.category_repository import CategoryRepository
 
 
 @dataclass
@@ -19,7 +19,7 @@ class CreateCategoryResponse:
 
 
 class CreateCategory:
-    def __init__(self, repository: InmemoryCategoryRepository):
+    def __init__(self, repository: CategoryRepository):
         self._repository = repository
 
     def execute(self, request: CreateCategoryRequest, response: CreateCategoryResponse):
@@ -29,5 +29,5 @@ class CreateCategory:
         except ValueError as e:
             raise InvalidCategoryData(str(e))
 
-        self._repository.add(category)
+        self._repository.create(category)
         response.id = category.id
