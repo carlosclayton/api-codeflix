@@ -30,4 +30,4 @@ class CreateCategory:
             raise InvalidCategoryData(str(e))
 
         self._repository.create(category)
-        response.id = category.id
+        return CreateCategoryResponse(id=category.id)
