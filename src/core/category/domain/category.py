@@ -4,9 +4,9 @@ from datetime import datetime
 from uuid import uuid4
 
 
+
 @dataclass
 class Category:
-
     name: str
     description: str = ""
     is_active: bool = True
