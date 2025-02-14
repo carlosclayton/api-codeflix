@@ -4,7 +4,7 @@ import pytest
 import uuid
 
 from src.core.category.application.create_category import CreateCategory, CreateCategoryRequest, CreateCategoryResponse
-from src.core.category.application.invalid_category_data import InvalidCategoryData
+from src.core.category.application.exceptions import InvalidCategoryData
 from src.core.category.infra.in_memory_category_repository import InmemoryCategoryRepository
 
 
@@ -20,9 +20,7 @@ class TestCreateCategory:
             is_active=True
         )
 
-        response = CreateCategoryResponse(id=uuid.uuid4())
-
-        use_case.execute(request=request, response=response)
+        response = use_case.execute(request=request)
         assert isinstance(response.id, uuid.UUID)
 
         assert response.id is not None
@@ -44,12 +42,11 @@ class TestCreateCategory:
                 is_active=True
             )
 
-            response = CreateCategoryResponse(id=uuid.uuid4())
 
-            category_id = use_case.execute(request=request, response=response)
 
-            assert category_id is None
-            assert isinstance(response.id, uuid.UUID)
+            response = use_case.execute(request=request)
+
+            assert response is None
             assert len(repository.categories) == 0
 
 

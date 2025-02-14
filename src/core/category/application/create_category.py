@@ -1,7 +1,7 @@
 import uuid
 from dataclasses import dataclass
 
-from src.core.category.application.invalid_category_data import InvalidCategoryData
+from src.core.category.application.exceptions import InvalidCategoryData
 from src.core.category.domain.category import Category
 from src.core.category.application.category_repository import CategoryRepository
 
@@ -22,7 +22,7 @@ class CreateCategory:
     def __init__(self, repository: CategoryRepository):
         self._repository = repository
 
-    def execute(self, request: CreateCategoryRequest, response: CreateCategoryResponse):
+    def execute(self, request: CreateCategoryRequest) -> CreateCategoryResponse:
         try:
             category = Category(name=request.name, description=request.description, is_active=request.is_active)
 

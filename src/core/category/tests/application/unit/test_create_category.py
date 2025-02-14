@@ -4,7 +4,7 @@ import pytest
 import uuid
 
 from src.core.category.application.create_category import CreateCategory, CreateCategoryRequest, CreateCategoryResponse
-from src.core.category.application.invalid_category_data import InvalidCategoryData
+from src.core.category.application.exceptions import InvalidCategoryData
 from src.core.category.application.category_repository import CategoryRepository
 
 
