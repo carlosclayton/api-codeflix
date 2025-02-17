@@ -19,11 +19,14 @@ class InmemoryCategoryRepository(CategoryRepository):
     def list(self) -> list[Category]:
         return self.categories
 
-    def update(self, category: Category) -> None:
-        for i, c in enumerate(self.categories):
-            if c.id == category.id:
-                self.categories[i] = category
-                return
+    def update(self, id: uuid.UUID, category: Category) -> Category or None:
+        for c in self.categories:
+            if c.id == id:
+                c.name = category.name
+                c.description = category.description
+                c.is_active = category.is_active
+                return c
+        return None
 
     def delete(self, id: uuid.UUID) -> None:
         self.categories = [c for c in self.categories if c.id != id]

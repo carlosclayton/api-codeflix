@@ -30,7 +30,7 @@ class TestGetCategory:
             is_active=category.is_active
         )
 
-    def test_create_category_with_invalid_data(self):
+    def test_get_category_with_invalid_data(self):
         with pytest.raises(CategoryNotFound, match="Category not found"):
             category = Category(name="Category 1", description="description", is_active=True)
             mock_repository = create_autospec(CategoryRepository)

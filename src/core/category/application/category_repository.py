@@ -18,7 +18,7 @@ class CategoryRepository(ABC):
         pass
 
     @abstractmethod
-    def update(self, category: Category) -> Category:
+    def update(self, id:uuid.UUID, category: Category) -> Category:
         pass
 
     @abstractmethod
